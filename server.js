@@ -2,7 +2,7 @@ const http =  require('http');
 
 const server = http.createServer((req, res)=> {
     console.log('server created');
-    res.end("hello awsone");
+    res.end("hello awsone send now");
 
 })
 
