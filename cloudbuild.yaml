@@ -1,10 +1,24 @@
+---
 steps:
-  # Docker Build
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 
-           'gcr.io/gcdemopractise/cloud-run-demo:$SHORT_SHA', 
-           '.']
-   # Docker Push
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 
-           'gcr.io/gcdemopractise/cloud-run-demo:$SHORT_SHA']
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -t
+      - gcr.io/gcdemopractise/cloud-run-demo:$SHORT_SHA
+      - .
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - gcr.io/gcdemopractise/cloud-run-demo:$SHORT_SHA
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - cloud-run-demo
+      - --image
+      - gcr.io/gcdemopractise/cloud-run-demo:$SHORT_SHA
+      - --region
+      - us-central1
+images:
+  - gcr.io/gcdemopractise/cloud-run-demo:$SHORT_SHA
